@@ -8,7 +8,7 @@ import requests
 app = Flask(__name__)
 
 # Replace with your actual Groq Key
-GROQ_API_KEY = "YOUR_ACTUAL_GROQ_KEY_HERE"
+GROQ_API_KEY = "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"
 robot_speech_queue = "WAITING"
 
 @app.route("/")
