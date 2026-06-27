@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # This holds the text response until your physical ESP32 robot downloads it
 robot_speech_queue = "WAITING"
-GROQ_API_KEY = "YOUR_NEW_FRESH_GROQ_KEY" # <-- PASTE YOUR REAL GROQ KEY HERE
+GROQ_API_KEY = "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" # <-- PASTE YOUR REAL GROQ KEY HERE
 
 @app.route("/")
 def home():
