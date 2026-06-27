@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 # Ensure your key is in Render Environment Variables
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY") 
+GROQ_API_KEY = os.environ.get("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") 
 robot_speech_queue = None
 
 @app.route("/chat")
@@ -14,7 +14,7 @@ def chat():
     user_prompt = request.args.get('text', '')
     if not user_prompt: return "No text"
     
-    headers = {"Authorization": f"Bearer {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}", "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     body = {
         "model": "llama3-8b-8192", 
         "messages": [{"role": "user", "content": user_prompt + " (Keep answer under 10 words)"}]
