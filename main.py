@@ -1,34 +1,17 @@
 import os
-# Ensure libraries are installed
-os.system("pip install flask gunicorn requests")
-
 from flask import Flask, request
 import requests
 
 app = Flask(__name__)
 
-# Replace with your actual Groq Key
-GROQ_API_KEY = "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"
-robot_speech_queue = "WAITING"
+# Fetch the key from Render's Environment Variables
+GROQ_API_KEY = os.environ.get("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") 
+# Start as None so the ESP32 sees an empty string
+robot_speech_queue = None
 
 @app.route("/")
 def home():
-    return '''
-    <html>
-      <body style="font-family:sans-serif; text-align:center; padding:50px; background:#111; color:white;">
-        <h2>🤖 Desk Robot Controller</h2>
-        <input type="text" id="msg" placeholder="Type..." style="width:80%; padding:15px; font-size:16px;">
-        <button onclick="send()" style="padding:15px 30px; background:#00aa00; border:none; color:white; cursor:pointer;">Send</button>
-        <script>
-          async function send() {
-            const txt = document.getElementById('msg').value;
-            await fetch('/chat?text=' + encodeURIComponent(txt));
-            alert("Sent!");
-          }
-        </script>
-      </body>
-    </html>
-    '''
+    return "Robot Bridge is Online."
 
 @app.route("/chat")
 def chat():
@@ -50,10 +33,13 @@ def chat():
 @app.route("/get_robot_speech")
 def get_robot_speech():
     global robot_speech_queue
+    if robot_speech_queue is None:
+        return "" # Server sends empty string, which stops the humming
+    
     msg = robot_speech_queue
-    robot_speech_queue = "WAITING"
+    robot_speech_queue = None 
     return msg
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
-    
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
