@@ -1,3 +1,5 @@
+import os
+os.system("pip install flask gunicorn requests")
 from flask import Flask, request, jsonify
 import requests
 
