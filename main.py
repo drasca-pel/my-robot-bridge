@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 
 # Fetch the key from Render's Environment Variables
-GROQ_API_KEY = os.environ.get("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") 
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY") 
 robot_speech_queue = None
 
 # This route keeps Render from killing the app
