@@ -8,7 +8,6 @@ app = Flask(__name__)
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY") 
 robot_speech_queue = None
 
-# This route keeps Render from killing the app
 @app.route("/health")
 def health():
     return "OK", 200
@@ -24,8 +23,9 @@ def chat():
     if not user_prompt: return "No text"
     
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
+    # Updated to the new model supported by Groq
     body = {
-        "model": "llama3-8b-8192", 
+        "model": "llama-3.1-8b-instant", 
         "messages": [{"role": "user", "content": user_prompt + " (Keep answer under 10 words)"}]
     }
     
@@ -52,6 +52,5 @@ def get_robot_speech():
     return msg
 
 if __name__ == "__main__":
-    # Ensure it listens on the port Render assigns
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
